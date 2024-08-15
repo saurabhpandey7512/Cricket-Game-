@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cricket Game</title>
+    <style>
+        .choice_image{
+            height: 100px;
+        width: 100px;
+    }
+    .buttonn{
+        margin: 15px;
+        background-color:black;
+        
+    }
+   
+    </style>
+</head>
+<body>
+
+    <h1>Bat Ball Stump Game</h1>
+    
+
+
+<button class="buttonn" onclick="   
+let computerChoice =gnrtcmptrchoice();
+let resultmsg = getresult('Bat' , computerChoice);
+ showresult('Bat', computerChoice , resultmsg);
+"><img src="images/Bat.jpg" alt="Bat Images" class="choice_image"></button>
+
+
+<button class="buttonn"  onclick="   
+ computerChoice = gnrtcmptrchoice();
+ resultmsg = getresult('Ball' , computerChoice);
+ showresult('Ball', computerChoice , resultmsg);
+"><img src="images/Ball.jpg" alt="Ball Images" class="choice_image"></button>
+
+
+<button class="buttonn"   onclick="   
+computerChoice = gnrtcmptrchoice();
+ resultmsg = getresult('Stump' , computerChoice);
+ showresult('Stump', computerChoice , resultmsg);
+"><img src="images/Stump.jpg" alt="Stump Images" class="choice_image"></button>
+
+
+<button onclick="">Reset</button>
+
+<h3 id="user_move"></h3>
+<h3 id="computer_move"></h3>
+<h3 id="Result"></h3>
+<h3 id="Score"></h3>
+<script> 
+ // object are created for maintain the score result
+ let score = {
+    win:0,
+    loss:0,
+    tie:0,
+ 
+ }; score.displayScore=  function(){// for follow encapsulation we write it here , you can directly write in alert
+    return ` Won : ${score.win} , Lost : ${score.loss} , Tie : ${score.tie} `
+  }
+
+// function for reduce the line of code and it defines one and can be reusable many time
+    function gnrtcmptrchoice(){
+// this will generate a random number bt 0 - 3
+let randomnumber = Math.random()*3;
+
+if(randomnumber>0 && randomnumber<=1){
+ return 'Bat'
+//console.log('computer choice is Bat');
+}
+else if(randomnumber>0 && randomnumber<=2){
+return 'Ball';
+//console.log('computer choice is Ball');
+}
+else {
+return 'Stump'
+//console.log('computer choice is stump')
+}
+    }
+
+function getresult(usermove , computermove){
+    if(usermove==='Bat'){
+        if(computermove ==='Ball'){
+            score.win++;
+            return 'user won';
+           }
+           else if(computermove==='Bat'){
+            score.tie++;
+            return 'its tie';
+           }
+           else if(computermove ==='Stump'){
+            score.loss++;
+           return'computer has won';
+           }
+    }
+    
+    else if(usermove==='Ball'){
+        if(computermove ==='Ball'){
+            score.tie++;
+            return 'Its a tie';
+           }
+           else if(computermove==='Bat'){
+            score.loss++;
+            return 'Computer has won'; 
+           }
+           else if(computermove==='Stump'){
+            score.win++;
+           return 'User won';
+           }
+    }else{
+        if(computermove ==='Ball'){
+            score.loss++;
+            return 'computer has won';
+           }
+           else if(computermove==='Bat'){
+            score.win++;
+            return'user won';
+           }
+           else if(computermove==='Stump'){
+            score.tie++;
+           return'its tie';
+           }
+
+    }
+}
+
+function showresult(usermove , computermove ,resultmsg){
+    localStorage.setItem('score', JSON.stringify(score));
+    document.querySelector('#user_move').innerText=`You have selected - ${usermove}`;
+    document.querySelector('#computer_move').innerText=` Computer have selected - ${computermove}  `;
+    document.querySelector('#Result').innerText= `The Final Result is ${resultmsg}`;
+    document.querySelector('#Score').innerText= `${score.displayScore()}`;
+
+    <!-- console.log(score); -->
+    
+}
+</script>
+
+</body>
+</html>
